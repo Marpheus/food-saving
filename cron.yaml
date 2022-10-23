@@ -1,0 +1,5 @@
+cron:
+  - description: "mail to users"
+    url: /api/sendEmails
+    schedule: every 15 minutes
+    timezone: Europe/Prague
