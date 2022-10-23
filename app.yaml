@@ -1,0 +1,42 @@
+runtime: nodejs16
+env: standard
+
+# https://cloud.google.com/appengine/docs/flexible/nodejs/configuring-your-app-with-app-yaml
+# This sample incurs costs to run on the App Engine flexible environment.
+# The settings below are to reduce costs during testing and are not appropriate
+# for production use. For more information, see:
+# https://cloud.google.com/appengine/docs/flexible/nodejs/configuring-your-app-with-app-yaml
+#manual_scaling:
+#  instances: 1
+
+basic_scaling:
+  max_instances: 1
+  idle_timeout: 2m
+
+env_variables:
+  NEXTAUTH_SECRET: ""
+  NEXTAUTH_URL: "http://localhost:3000"
+  DISCORD_CLIENT_ID: ""
+  DISCORD_CLIENT_SECRET: ""
+
+
+#resources:
+#  cpu: .5
+#  memory_gb: 0.5
+#  disk_size_gb: 10
+
+handlers:
+  # Serve all static files with url ending with a file extension
+  - url: /favicon.ico
+    static_files: build/favicon.ico
+    upload: build/favicon.ico
+  - url: /(.*\..+)$
+    static_files: build/\1
+    upload: build/(.*\..+)$
+  # Catch all handler to index.html
+  - url: /.*
+    static_files: build/index.html
+    upload: build/index.html
+
+# manual_scaling - Lock instances to 1 . using App Engine Flexible will create VM instances to serve from. If you want to lower your usage, you might restrict your App to just one 1 instance (probably not what you want in production, but perfect for in prototyping and development cases ).
+# https://stackoverflow.com/questions/37381694/google-app-engine-how-to-correctly-deploy-an-app
