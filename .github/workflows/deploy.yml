@@ -14,11 +14,6 @@ jobs:
         with:
           project_id: ${{ secrets.GCP_PROJECT }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
-      - uses: actions/cache@v2
-        with:
-          path: ${{ github.workspace }}/node_modules
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}
-
       - id: build
         name: Build dist
         run: |-
@@ -28,7 +23,7 @@ jobs:
         uses: etereo-io/deploy-gae-action@master
         with:
           gae_config_path: './app.yaml'
-          service_account: ${{ secrets.GCP_SA_KEY }}
+          service_account: ${{ secrets.GCP_SA_KEY_BASE64 }}
           project_id: ${{ secrets.GCP_PROJECT }}
 
       - name: Clean Up
