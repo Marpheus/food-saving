@@ -5,6 +5,8 @@ on:
 name: Deploy to PROD
 
 jobs:
+  runs-on: ubuntu-latest
+
   job_id:
     steps:
       - id: 'auth'
