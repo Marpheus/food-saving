@@ -14,19 +14,22 @@ jobs:
         with:
           project_id: ${{ secrets.GCP_PROJECT }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
+      - uses: actions/cache@v2
+        with:
+          path: ${{ github.workspace }}/node_modules
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}
 
       - id: build
         name: Build dist
         run: |-
           yarn install
           yarn build
-      - id: deploy
-        name: Deploy to App Engine
-        uses: ./
+      - name: Initialize Google Cloud SDK & Deploy
+        uses: etereo-io/deploy-gae-action@master
         with:
-          version: gcloud
-          promote: false
-          working_directory: ${{ github.workspace }}
+          gae_config_path: './app.yaml'
+          service_account: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT }}
 
       - name: Clean Up
         if: ${{ always() }}
