@@ -25,18 +25,6 @@ env_variables:
 #  memory_gb: 0.5
 #  disk_size_gb: 10
 
-handlers:
-  # Serve all static files with url ending with a file extension
-  - url: /favicon.ico
-    static_files: build/favicon.ico
-    upload: build/favicon.ico
-  - url: /(.*\..+)$
-    static_files: build/\1
-    upload: build/(.*\..+)$
-  # Catch all handler to index.html
-  - url: /.*
-    static_files: build/index.html
-    upload: build/index.html
 
 # manual_scaling - Lock instances to 1 . using App Engine Flexible will create VM instances to serve from. If you want to lower your usage, you might restrict your App to just one 1 instance (probably not what you want in production, but perfect for in prototyping and development cases ).
 # https://stackoverflow.com/questions/37381694/google-app-engine-how-to-correctly-deploy-an-app
