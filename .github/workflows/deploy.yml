@@ -1,4 +1,4 @@
-name: deploy-appengine
+name: Deploy to Google Cloud
 on:
   push:
     branches:
@@ -6,10 +6,10 @@ on:
 
 jobs:
   gcloud:
-    name: with setup-gcloud
+    name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - uses: google-github-actions/setup-gcloud@main
         with:
           project_id: ${{ secrets.GCP_PROJECT }}
