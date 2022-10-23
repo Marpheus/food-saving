@@ -1,27 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-
-export interface Products {
-    categoryId: number;
-    categoryType: string;
-    productIds: number[];
-    impressions: any[];
-    pageable: Pageable;
-}
-
-export interface Pageable {
-    sort: Sort;
-    offset: number;
-    pageNumber: number;
-    pageSize: number;
-    paged: boolean;
-    unpaged: boolean;
-}
-
-export interface Sort {
-    empty: boolean;
-    sorted: boolean;
-    unsorted: boolean;
-}
+import {LastMinuteProducts, Product} from "@/utils/api.types";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -36,12 +14,39 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
         const lastMinuteProductsResponse = await fetch(lastMinuteProductsEndpoint, options)
 
-        const lastMinuteProducts: Products = await lastMinuteProductsResponse.json()
+        const lastMinuteProducts: LastMinuteProducts = await lastMinuteProductsResponse.json()
 
         const productIds = lastMinuteProducts.productIds
 
+        if (!productIds) {
+            return
+        }
+        let productsEndpoint = 'https://www.rohlik.cz/api/v1/products?'
+
+        productIds.forEach((id, index) => {
+            productsEndpoint += 'products=' + id
+            if (index !== productIds.length - 1) {
+                productsEndpoint += '&'
+            }
+        })
+
         // https://www.rohlik.cz/api/v1/products?products=1397320&products=1411928&products=1368347&products=1404643&products=1353987&products=1353717&products=1382145&products=1397764&products=1353747&products=1408459        // z tohto zobrazujem premiumOnly a name
         // beriem aj id a slug a konstruujem url
+        const productsResponse = await fetch(productsEndpoint, options)
+
+        const products: Product[] = await productsResponse.json()
+
+        const finalProducts: any[] = []
+        products.forEach((product) => {
+            finalProducts.push({
+                id: product.id,
+                name: product.name,
+                url: 'https://www.rohlik.cz/' + product.id + '-' + product.slug
+            })
+        })
+
+        console.log(finalProducts)
+        console.log(finalProducts.length)
 
         // https://www.rohlik.cz/api/v1/products/prices?products=1397320&products=1411928&products=1368347&products=1404643&products=1353987&products=1353717&products=1382145&products=1397764&products=1353747&products=1408459
         // price.amount je gramaz
@@ -62,7 +67,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         // sales.discountPercentage
         // sales.priceForUnit.whole
         // sales.remaining
-        res.json({lastMinuteProducts});
+        res.json({products});
     } catch (e) {
         res.status(400).json({error: (e as Error).message});
     }

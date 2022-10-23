@@ -25,10 +25,3 @@ jobs:
           gae_config_path: './app.yaml'
           service_account: ${{ secrets.GCP_SA_KEY_BASE64 }}
           project_id: ${{ secrets.GCP_PROJECT }}
-
-      - name: Clean Up
-        if: ${{ always() }}
-        run: |-
-          gcloud app services delete "${{ github.job }}-${{ github.run_number }}" \
-            --quiet \
-            --project="${{ secrets.GCP_PROJECT }}"
