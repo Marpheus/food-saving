@@ -85,3 +85,105 @@ export enum Flag {
 export enum Unit {
     Kg = "kg",
 }
+
+// PRICES
+
+export interface Price {
+    productId: number;
+    price: Price;
+    pricePerUnit: Price;
+    sales: Sale[];
+}
+
+export interface Price {
+    amount: number;
+    currency: Currency;
+}
+
+export enum Currency {
+    Czk = "CZK",
+}
+
+export interface Sale {
+    id: number;
+    type: SaleType;
+    triggerAmount: number;
+    price: Price;
+    pricePerUnit: Price;
+    badges: PriceBadge[];
+    validTill: Date;
+    active: boolean;
+}
+
+export interface PriceBadge {
+    type: BadgeType;
+    title: string;
+    subtitle: null;
+    tooltip: null;
+}
+
+export enum BadgeType {
+    BestBefore = "best-before",
+    Discount = "discount",
+    PremiumDiscount = "premium-discount",
+}
+
+export enum SaleType {
+    Expiration = "expiration",
+    Premium = "premium",
+}
+
+// STOCK
+
+export interface Stock {
+    productId: number;
+    warehouseId: number;
+    unavailabilityReason: UnavailabilityReason | null;
+    packageInfo: PackageInfo;
+    preorderEnabled: boolean;
+    maxBasketAmount: number;
+    maxBasketAmountReason: MaxBasketAmountReason;
+    deliveryRestriction: null;
+    expectedReplenishment: null;
+    availabilityDimension: number;
+    shelfLife: ShelfLife;
+    billablePackaging: null;
+    tooltips: any[];
+    sales: Sale[];
+    inStock: boolean;
+}
+
+export enum MaxBasketAmountReason {
+    Allowed = "ALLOWED",
+    Available = "AVAILABLE",
+}
+
+export interface PackageInfo {
+    amount: number;
+    unit: Unit;
+}
+
+export interface Sale {
+    id: number;
+    amount: number;
+    unlimitedAmount: boolean;
+    shelfLife: ShelfLife;
+}
+
+export interface ShelfLife {
+    type: Type;
+    average: number | null;
+    minimal: number | null;
+    bestBefore: Date | null;
+}
+
+export enum Type {
+    BestBefore = "bestBefore",
+    Standard = "standard",
+}
+
+export enum UnavailabilityReason {
+    VyprodánoOčekávámeVPondělí = "Vyprodáno. Očekáváme v pondělí.",
+    VyprodánoOčekávámeVeStředu = "Vyprodáno. Očekáváme ve středu.",
+    VyprodánoOčekávámeVÚterý = "Vyprodáno. Očekáváme v úterý.",
+}

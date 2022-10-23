@@ -1,28 +1,26 @@
-import {trpc} from "@/utils/trpc";
 import type React from "react";
 import {useState} from "react";
 import Head from "next/head";
-import {usePlausible} from "next-plausible";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const btn =
     "inline-flex items-center px-3 py-1.5 mx-1 border border-gray-300 shadow-sm font-medium rounded-full text-gray-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500";
 
+
 export default function Home() {
-    const subscribeMutation = trpc.useMutation(["food.subscribe"]);
-    const unsubscribeMutation = trpc.useMutation(["food.unsubscribe"]);
-    const plausible = usePlausible();
     const [email, setEmail] = useState('')
 
     const handleSubscribe = async (event: any) => {
         event.preventDefault()
 
-        await subscribeMutation.mutate({
-            email
+        const response = await fetch('./api/subscribe', {
+            method: 'POST',
+            body: JSON.stringify({email}),
+            headers: {
+                'Content-Type': 'application/json',
+            },
         })
-
-        plausible('subscribe')
 
         // TODO toasts
     }
@@ -30,11 +28,13 @@ export default function Home() {
     const handleUnsubscribe = async (event: any) => {
         event.preventDefault()
 
-        await unsubscribeMutation.mutate({
-            email
+        const response = await fetch('./api/unsubscribe', {
+            method: 'POST',
+            body: JSON.stringify({email}),
+            headers: {
+                'Content-Type': 'application/json',
+            },
         })
-
-        plausible('unsubscribe')
     }
 
     return (

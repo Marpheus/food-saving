@@ -2,3 +2,12 @@
 
 - save food close to its expiration date by subscribing to a mailing list
 - data source is Rohlik.cz [Zachran Jidlo](https://www.rohlik.cz/zachran-jidlo) initiative
+
+ TODO 
+ 
+ - novy endpoint
+- novy SMTP server
+- ako nacitat kategorie (id) - do filtrov
+- nasadit posielanie emailov
+- vylepsit FE
+- napisat filtry
