@@ -5,7 +5,7 @@
 
  TODO 
  
- - novy endpoint
+- novy endpoint
 - novy SMTP server
 - ako nacitat kategorie (id) - do filtrov
 - nasadit posielanie emailov
