@@ -4,6 +4,9 @@ steps:
     args: [ "install" ]
   - name: node:16.15.0
     entrypoint: yarn
+    args: [ "build" ]
+  - name: node:16.15.0
+    entrypoint: yarn
     args: [ "run", "create-env" ]
     env:
       - 'EMAIL_FROM=${_EMAIL_FROM}'
