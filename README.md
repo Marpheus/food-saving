@@ -5,6 +5,7 @@
 
  TODO 
  
+- prepis buildu z githubu rovno do GCP 
 - novy endpoint
 - novy SMTP server
 - ako nacitat kategorie (id) - do filtrov
