@@ -5,7 +5,7 @@
 
  TODO 
  
-~~ nasadit posielanie emailov~~
+~~nasadit posielanie emailov~~
 - prepis buildu z githubu rovno do GCP 
 - novy endpoint
 - novy SMTP server
