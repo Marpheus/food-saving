@@ -11,3 +11,4 @@
 - nasadit posielanie emailov
 - vylepsit FE
 - napisat filtry
+- pri nasadeni novej verzie sa samozrejme zmaze "databaza", vymysliet ako to vyriesit
