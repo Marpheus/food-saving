@@ -1,18 +1,7 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import users from "data/users.json";
-import fs from "fs";
-
-function saveData(users: any) {
-    fs.writeFileSync('data/users.json', JSON.stringify(users, null, 4));
-}
-
-const validateEmail = (email: string) => {
-    return String(email)
-        .toLowerCase()
-        .match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        );
-};
+import dbConnect from '../../utils/connection';
+import UserModel from "../../models/user.model";
+import {validateEmail} from "@/utils/validators";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -21,22 +10,29 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             return
         }
 
+        await dbConnect()
         const isEmail = validateEmail(req.body.email)
         if (!isEmail) {
-            return {success: false}
+            res.status(500).send({message: 'Not a valid email'})
+            return
         }
-        const user = {
+
+        // @ts-ignore
+        const user = await UserModel.findOne({
             email: req.body.email
+        })
+
+        if (user) {
+            res.status(200).send({message: 'OK'})
+            return
         }
 
-        // @ts-expect-error TODO
-        if (!users.find((u) => u.email === user.email)) {
-            // @ts-expect-error TODO
-            users.push(user)
-            saveData(users)
-        }
+        const userToSave = new UserModel({email: req.body.email})
+        userToSave.save()
 
-        res.json({users});
+        res.status(200).send({message: 'OK'})
+        return
+
     } catch (e) {
         res.status(400).json({error: (e as Error).message});
     }
