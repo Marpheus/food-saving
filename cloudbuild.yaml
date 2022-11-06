@@ -9,6 +9,7 @@ steps:
       - 'EMAIL_FROM=${_EMAIL_FROM}'
       - 'EMAIL_USER=${_EMAIL_USER}'
       - 'EMAIL_PASS=${_EMAIL_PASS}'
+      - 'DATABASE_URL=${_DATABASE_URL}'
   - name: node:16.15.0
     entrypoint: yarn
     args: [ "build" ]

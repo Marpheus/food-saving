@@ -1,5 +1,5 @@
 cron:
   - description: "mail to users"
     url: /api/sendEmails
-    schedule: every 30 minutes
+    schedule: every 30 minutes from 9:00 to 18:00
     timezone: Europe/Prague
