@@ -9,4 +9,6 @@
 - opravit emaily a nastavovanie dataSent po poslednej uprave
 - TODOs
 - typescript
+- pridat odhlasenie odberu
 - subkategorie
+- heslo/sifrovanie
