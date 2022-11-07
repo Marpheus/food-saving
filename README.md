@@ -6,6 +6,7 @@
 ## TODO
 
 #### @Maros
+- opravit cloud - billing
 - opravit emaily a nastavovanie dataSent po poslednej uprave
 - opravy UI (padding, layout)
 - TODOs
