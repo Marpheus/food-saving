@@ -7,6 +7,7 @@
 
 #### @Maros
 - opravit emaily a nastavovanie dataSent po poslednej uprave
+- opravy UI (padding, layout)
 - TODOs
 - typescript
 - pridat odhlasenie odberu
