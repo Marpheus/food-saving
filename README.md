@@ -14,3 +14,7 @@
 - pridat odhlasenie odberu
 - subkategorie
 - heslo/sifrovanie
+
+
+- v maili tlacitko Nechcem produkt - nejaky blacklist produktov
+- filter cena za kilo
